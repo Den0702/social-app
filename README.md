@@ -5,7 +5,7 @@ Jest to projekt (w budowie) aplikacji modelującej zachowanie medium społeczno�
 ## Wykorzystywane narzędzia i technologie
 - React
 - React-router-dom
-- Biblioteka _axios_ do tworzenia zapytań
+- Biblioteka _axios_ do tworzenia zapytań HTTP
 - Local Storage 
 - JSON Web Token
 - HTML
