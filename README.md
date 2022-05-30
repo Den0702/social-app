@@ -10,7 +10,7 @@ Jest to projekt (w budowie) aplikacji modelującej zachowanie medium społeczno�
 - JSON Web Token
 - HTML
 - CSS
-- Font Awesome do ustawienia czcionek oraz infografik
+- Font Awesome do ustawienia infografik
 ## Sposób logowania
 Logowanie działa tylko dla predefiniowanych użytkowników:  
      **_hasło_**: 1234   
