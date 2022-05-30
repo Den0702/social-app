@@ -61,7 +61,8 @@ export default function LogIn(props) {
 
     return (
         <section className="login">
-            {props.currentUser && <Navigate to="/" />}
+            {/* przekierowanie do strony glownej po zalogowaniu */}
+            {props.currentUserProp && <Navigate to="/" />}
             
             <form
                 className="form login-form" 

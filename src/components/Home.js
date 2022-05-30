@@ -20,7 +20,7 @@ class Home extends Component {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 //przy zalogowaniu dostaje sie tylko posty ktore sie subskrybuje
-                'Authorization': 'Bearer' + (this.props.currentUser ? this.props.currentUser.jwt_token : null)
+                'Authorization': 'Bearer ' + (this.props.currentUserProp ? this.props.currentUserProp.jwt_token : null)
             }
         }
         axios.post('https://akademia108.pl/api/social-app/post/latest', {}, axiosConfig)
@@ -41,24 +41,53 @@ class Home extends Component {
                 'Accept': 'application/json'
             }
         }
-        const requestData = { date: this.state.postsList[this.state.postsList.length - 1].created_at }
+        const requestData = {
+            date: this.state.postsList[this.state.postsList.length - 1].created_at
+        }
+
         axios.post(
             'https://akademia108.pl/api/social-app/post/older-then',
             JSON.stringify(requestData),
             JSON.stringify(axiosConfig)
         )
             .then(res => {
-                this.setState({ postsList: this.state.postsList.concat(res.data) })
+                this.setState({ 
+                    postsList: this.state.postsList.concat(res.data) 
+                })
             })
             .catch(err => console.log(err))
     }
 
+    getPostsNewerThen = () => {
+        const axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+        const requestData = {
+            date: this.state.postsList[0].created_at
+        }
+
+        axios.post('https://akademia108.pl/api/social-app/post/newer-then',
+            requestData,
+            axiosConfig
+        )
+            .then(res =>
+                this.setState({ 
+                    postsList: res.data.concat(this.state.postsList) 
+                })
+            )
+    }
+
+    //ta metoda uruchamia sie przy pierwszym zaladowaniu komponentu
     componentDidMount() {
         this.getPostsLatest();
     }
 
     render() {
-        console.log(this.props.currentUser);
+        console.log(this.props.currentUserProp);
+        
         let postsList = this.state.postsList.map(userPost => {
             /* Przy pobieraniu kolejnych porcji danych, renderowanie nie startuje od zera, tylko zaczynając od aktualnie pobranej porcji. 
             Poprzednie są już zachowane. To zapewnia Virtual DOM */
@@ -66,16 +95,19 @@ class Home extends Component {
                 <Post
                     userPost={userPost}
                     key={userPost.id}
-                    currentUser={this.props.currentUser}
+                    currentUserProp={this.props.currentUserProp}
                 />
             )
         });
 
         return (
             <section className="home">
-                <PostAdd currentUser={this.props.currentUser} />
+                <PostAdd 
+                    currentUserProp={this.props.currentUserProp} 
+                    getNewerPosts={this.getPostsNewerThen}
+                />
                 <h2>Home</h2>
-                <div className="container" >
+                <div className="container">
                     {postsList}
                 </div>
                 <button

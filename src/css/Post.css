@@ -66,3 +66,10 @@
     font-weight: 600;
 }
 
+.btn.like-btn {
+	background-color: transparent;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+    color:#fff;
+}
