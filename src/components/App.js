@@ -26,6 +26,11 @@ class App extends Component {
             currentUser: user
         })
     }
+    
+/*     componentDidMount() {
+        //wyslac zapytanie do backendu, czy uzytkownik jest zalogowany
+        setTimeout(this.signUserOut, this.state.currentUser.ttl);
+    } */
 
     signUserOut = (e) => {
         //TO DO - powinien tutaj być preventDefault - bo inaczej wypali zdarzenie domyslne - przejscie do URL wskazanego przez linka
@@ -80,7 +85,6 @@ class App extends Component {
 
                             {this.state.currentUser && <li> <Link to="#" onClick={(e) => this.signUserOut(e)}>Wyloguj </Link></li>}
                         </ul>
-
                         {this.state.isMessageVisible && this.state.logoutSuccessMessage && <p className="logout-success">{this.state.logoutSuccessMessage}</p>}
                         {this.state.isMessageVisible && this.state.logoutErrorMessage && <p className="logout-error">{this.state.logoutErrorMessage}</p>}
                     </nav>

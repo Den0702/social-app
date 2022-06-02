@@ -3,9 +3,9 @@
 }
 
 .App-header {
-    background-color: #282c34;
+    background-color: #33454d;
     min-height: 10vh;
-    font-size: calc(10px + 2vmin);
+    font-size: calc(18px + 0.5vmin);
     color: white;
     padding: 25px;
     display: flex;
@@ -24,7 +24,21 @@ nav li {
     padding: 10px 0;
 }
 
+@media all and (min-width: 992px) {
+    .App-header {
+        justify-content: flex-end;
+    }
 
+    nav ul {
+        margin-right: 10vmin;
+    }
+}
+
+@media all and (min-width: 480px) and (max-width: 991px) {
+    nav li {
+        margin: 0 70px;
+    }
+}
 
 
 

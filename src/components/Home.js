@@ -38,7 +38,8 @@ class Home extends Component {
         const axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + (this.props.currentUserProp ? this.props.currentUserProp.jwt_token : null)
             }
         }
         const requestData = {
@@ -51,8 +52,8 @@ class Home extends Component {
             JSON.stringify(axiosConfig)
         )
             .then(res => {
-                this.setState({ 
-                    postsList: this.state.postsList.concat(res.data) 
+                this.setState({
+                    postsList: this.state.postsList.concat(res.data)
                 })
             })
             .catch(err => console.log(err))
@@ -62,7 +63,8 @@ class Home extends Component {
         const axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + (this.props.currentUserProp ? this.props.currentUserProp.jwt_token : null)
             }
         }
         const requestData = {
@@ -74,8 +76,8 @@ class Home extends Component {
             axiosConfig
         )
             .then(res =>
-                this.setState({ 
-                    postsList: res.data.concat(this.state.postsList) 
+                this.setState({
+                    postsList: res.data.concat(this.state.postsList)
                 })
             )
     }
@@ -87,7 +89,7 @@ class Home extends Component {
 
     render() {
         console.log(this.props.currentUserProp);
-        
+
         let postsList = this.state.postsList.map(userPost => {
             /* Przy pobieraniu kolejnych porcji danych, renderowanie nie startuje od zera, tylko zaczynając od aktualnie pobranej porcji. 
             Poprzednie są już zachowane. To zapewnia Virtual DOM */
@@ -102,12 +104,12 @@ class Home extends Component {
 
         return (
             <section className="home">
-                <PostAdd 
-                    currentUserProp={this.props.currentUserProp} 
-                    getNewerPosts={this.getPostsNewerThen}
-                />
                 <h2>Home</h2>
                 <div className="container">
+                    <PostAdd
+                        currentUserProp={this.props.currentUserProp}
+                        getNewerPosts={this.getPostsNewerThen}
+                    />
                     {postsList}
                 </div>
                 <button

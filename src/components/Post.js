@@ -12,13 +12,13 @@ class Post extends Component {
         super(props);
 
         this.state = {
-            liked: this.isPostLiked(),
+            liked: false,
             message: '',
             likesNum: props.userPost.likes.length
         }
     }
 
-    isPostLiked = () => {
+    componentDidMount() {
         let usersLikesArr = this.props.userPost.likes;
 
         if (this.props.currentUserProp) {
@@ -29,12 +29,8 @@ class Post extends Component {
             })
 
             if (currentUserLeftLike) {
-                return true;
-            } else {
-                return false;
+                this.setState({liked: true});
             }
-        } else {
-            return false;
         }
     }
 
@@ -127,8 +123,11 @@ class Post extends Component {
                         {transformDate(this.props.userPost.created_at)}
                     </div>
                     <div className="post-like">
-                        <button onClick={!this.state.liked ? this.postAddLike : this.postRemoveLike} className="btn like-btn"><FontAwesomeIcon icon={faHeart} />
-
+                        <button
+                            onClick={!this.state.liked ? this.postAddLike : this.postRemoveLike}
+                            className="btn like-btn"
+                        >
+                            <FontAwesomeIcon icon={faHeart} />
                         </button>
                         <span>{this.state.likesNum}</span>
                     </div>

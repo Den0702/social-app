@@ -59,6 +59,7 @@ class PostAdd extends Component {
                         onSubmit={e => this.addPost(e)}>
                         <textarea
                             ref={textField => this._userPostTextField = textField}
+                            placeholder="Treść twojej wiadomosci..."
                         >
                         </textarea>
                         <button type="submit" className="btn btn-submit">Nowy post</button>

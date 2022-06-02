@@ -11,15 +11,13 @@ export default function LogIn(props) {
     const [passwd, setPasswd] = useState('');
     const [passwdEmpty, setPasswdError] = useState(false);
     
-    //const ttl = 3600;/* czas, po którym użytkownik zostanie automatycznie wylogowany */
-    
     function signUserIn(event) {
         event.preventDefault();
 
         const sendData = {
             'username': `${username}`,
             'password': `${passwd}`,
-            //'ttl': `${ttl}`
+            'ttl': 3600 /* czas, po którym użytkownik zostanie automatycznie wylogowany */
         }
 
         const axiosConfig = {
@@ -39,7 +37,6 @@ export default function LogIn(props) {
 
             if (!(typeof(res.data.username) === 'object') && !(typeof(res.data.password) === 'object')) {
                 const currentUser = res.data;
-
                 props.saveCurrentUserData(currentUser);//zeby zapisac obiekt uzytkownika do stanu w App         
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));//i jednoczesnie zapisac do localStorage
             } else {
@@ -56,8 +53,6 @@ export default function LogIn(props) {
         .catch(error => console.log(error));
         
     }
-
-    //let timerID = setTimeout(props.signUserOut, ttl)
 
     return (
         <section className="login">
@@ -88,7 +83,6 @@ export default function LogIn(props) {
                 {usernameEmpty && <p>Proszę podać nazwę użytkownika</p>}
                 {passwdEmpty && <p>Proszę podać hasło</p>}
                 
-                {/* <Link to="/signup">Rejestracja</Link> -czy mozna */}
                 <button type="submit" className="btn btn-submit">Zaloguj się</button>
             </form>
         </section>
