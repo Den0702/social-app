@@ -49,7 +49,7 @@ class Home extends Component {
         axios.post(
             'https://akademia108.pl/api/social-app/post/older-then',
             JSON.stringify(requestData),
-            JSON.stringify(axiosConfig)
+            axiosConfig
         )
             .then(res => {
                 this.setState({
