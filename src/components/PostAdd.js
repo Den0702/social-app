@@ -41,6 +41,9 @@ class PostAdd extends Component {
                 }
             ).catch(error => {
                 console.log(error.data.message);
+
+                this.props.clearUserMethod();
+
                 this.setState({ message: error.data.message})
                 this._userPostTextField.value = '';
             })

@@ -26,17 +26,40 @@ class App extends Component {
             currentUser: user
         })
     }
-    
-/*     componentDidMount() {
-        //wyslac zapytanie do backendu, czy uzytkownik jest zalogowany
-        setTimeout(this.signUserOut, this.state.currentUser.ttl);
-    } */
+
+    componentDidMount() {
+        //wyslac zapytanie do backendu, czy token jest wazny(zapytanie o profil uzytkownika), inaczej wyczyscic jego dane z localStorage
+        this.isTokenValid();
+    }
+
+    isTokenValid = () => {
+        const axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null)
+            }
+        }
+
+        axios.post('https://akademia108.pl/api/social-app/user/profile',
+            {},
+            axiosConfig
+        ).then(res => console.log(res)
+        ).catch(() => {
+            this.clearUser();
+        })
+    }
+
+    clearUser = () => {
+        localStorage.removeItem('currentUser')
+        this.setState({ currentUser: null })
+    }
 
     signUserOut = (e) => {
         //TO DO - powinien tutaj być preventDefault - bo inaczej wypali zdarzenie domyslne - przejscie do URL wskazanego przez linka
         e.preventDefault();
         //alert('Sign Out!');
-        let axiosConfig = {
+        const axiosConfig = {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -90,7 +113,16 @@ class App extends Component {
                     </nav>
                 </header>
                 <Routes>
-                    <Route index="/" element={<Home currentUserProp={this.state.currentUser} />} />
+                    <Route
+                        index="/"
+                        element={
+                            <Home
+                                currentUserProp={this.state.currentUser}
+                                tokenCheckMethod={this.isTokenValid}
+                                clearUserMethod={this.clearUser}/* bedzie przekazywany do komponentu potomnego wzgledem Home */
+                            />
+                        }
+                    />
                     <Route path="signup" element={<SignUp />} />
                     <Route
                         path="login"

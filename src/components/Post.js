@@ -29,7 +29,7 @@ class Post extends Component {
             })
 
             if (currentUserLeftLike) {
-                this.setState({liked: true});
+                this.setState({ liked: true });
             }
         }
     }
@@ -59,12 +59,12 @@ class Post extends Component {
                     message: res.data.message,
                     likesNum: currentState.likesNum + 1
                 }
-            }
-            )
+            })
         },
-            error => this.setState(
-                { message: error.response.data.message }
-            )
+            error => {
+                this.props.clearUserMethod();
+                this.setState({ message: error.response.data.message })
+            }
         )
     }
 
@@ -91,7 +91,10 @@ class Post extends Component {
                     }
                 })
             },
-                error => this.setState({ message: error.response.data.message })
+                error => {
+                    this.props.clearUserMethod();
+                    this.setState({ message: error.response.data.message })
+                }
             )
     }
 

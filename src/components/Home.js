@@ -84,6 +84,7 @@ class Home extends Component {
 
     //ta metoda uruchamia sie przy pierwszym zaladowaniu komponentu
     componentDidMount() {
+        this.props.tokenCheckMethod();
         this.getPostsLatest();
     }
 
@@ -98,6 +99,7 @@ class Home extends Component {
                     userPost={userPost}
                     key={userPost.id}
                     currentUserProp={this.props.currentUserProp}
+                    clearUserMethod={this.props.clearUserMethod}
                 />
             )
         });
@@ -109,7 +111,9 @@ class Home extends Component {
                     <PostAdd
                         currentUserProp={this.props.currentUserProp}
                         getNewerPosts={this.getPostsNewerThen}
+                        clearUserMethod={this.props.clearUserMethod}
                     />
+
                     {postsList}
                 </div>
                 <button
