@@ -60,12 +60,10 @@ class Post extends Component {
                     likesNum: currentState.likesNum + 1
                 }
             })
-        },
-            error => {
-                this.props.clearUserMethod();
-                this.setState({ message: error.response.data.message })
-            }
-        )
+        }).catch(error => {
+            this.props.clearUserMethod();
+            this.setState({ message: error.response.data.message })
+        })
     }
 
     postRemoveLike = () => {
@@ -130,6 +128,12 @@ class Post extends Component {
                             onClick={!this.state.liked ? this.postAddLike : this.postRemoveLike}
                             className="btn like-btn"
                         >
+                            {/* {
+                                this.state.liked ?
+                                    <FontAwesomeIcon icon="fa-solid fa-heart" />
+                                    :
+                                    <FontAwesomeIcon icon="fa-regular fa-heart" />
+                            } */}
                             <FontAwesomeIcon icon={faHeart} />
                         </button>
                         <span>{this.state.likesNum}</span>

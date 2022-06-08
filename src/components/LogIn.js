@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import '../css/Login.css';
 import { Navigate } from "react-router-dom";
@@ -11,13 +11,22 @@ export default function LogIn(props) {
     const [passwd, setPasswd] = useState('');
     const [passwdEmpty, setPasswdError] = useState(false);
     
+    useEffect(() => {
+        document.body.style.backgroundColor = "#1ba4ce";
+        
+        //kiedy bedziemy sie przelaczac na inny komponent, to to spowoduje, ze background-color stanie sie null'em 
+        return () => {
+            document.body.style.backgroundColor = null;
+        }
+    }, [])
+
     function signUserIn(event) {
         event.preventDefault();
 
         const sendData = {
             'username': `${username}`,
             'password': `${passwd}`,
-            'ttl': 3600 /* czas w minutach, po którym token uzytkownika przestanie byc wazny */
+            'ttl': 1 /* czas w minutach, po którym token uzytkownika przestanie byc wazny */
         }
 
         const axiosConfig = {
@@ -50,7 +59,7 @@ export default function LogIn(props) {
                 }
             }
         })
-        .catch(error => console.log(error));
+        .catch(error => console.log(`The signUserIn's query caused this error: ${error}`));
         
     }
 

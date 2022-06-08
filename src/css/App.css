@@ -5,7 +5,6 @@
 .App-header {
     background-color: #33454d;
     min-height: 10vh;
-    font-size: calc(18px + 0.5vmin);
     color: white;
     padding: 25px;
     display: flex;
@@ -21,7 +20,7 @@
 nav li {
     display: inline-block;
     margin: 0 10px;
-    padding: 10px 0;
+    padding: 20px 0;
 }
 
 @media all and (min-width: 992px) {
@@ -34,11 +33,25 @@ nav li {
     }
 }
 
-@media all and (min-width: 480px) and (max-width: 991px) {
-    nav li {
-        margin: 0 70px;
+@media all and (max-width: 513px) {
+    nav ul {
+        display: flex;
+        flex-direction: column;
     }
 }
+
+@media all and (min-width: 515px)and (max-width: 799px) {
+    nav li {
+        margin: 0 30px;
+    }
+}
+
+@media all and (min-width: 800px) and (max-width: 991px) {
+    nav li {
+        margin: 0 50px;
+    }
+}
+
 
 
 

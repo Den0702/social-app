@@ -16,7 +16,7 @@ class App extends Component {
         /* Initial state jest ustawiany albo na zalogowanego uzytkownika albo na nic */
         this.state = {
             currentUser: localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null,
-            isMessageVisible: true
+            isMessageVisible: true,
         }
     }
 
@@ -29,7 +29,9 @@ class App extends Component {
 
     componentDidMount() {
         //wyslac zapytanie do backendu, czy token jest wazny(zapytanie o profil uzytkownika), inaczej wyczyscic jego dane z localStorage
-        this.isTokenValid();
+        if (this.state.currentUser) {
+            this.isTokenValid();
+        }
     }
 
     isTokenValid = () => {
@@ -51,8 +53,10 @@ class App extends Component {
     }
 
     clearUser = () => {
-        localStorage.removeItem('currentUser')
-        this.setState({ currentUser: null })
+        if (this.state.currentUser) {
+            localStorage.removeItem('currentUser')
+            this.setState({ currentUser: null })
+        }
     }
 
     signUserOut = (e) => {
@@ -86,8 +90,8 @@ class App extends Component {
                 setTimeout(() => this.setState({ isMessageVisible: false }), 3000)
             },
                 error => {
+                    console.log(`App: signUserOut's query caused this error: ${error}`)
                     this.setState({ logoutErrorMessage: error.message })
-                    localStorage.removeItem('currentUser');
                 }
             )
 
