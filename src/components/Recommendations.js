@@ -16,13 +16,13 @@ export default function Recommendations(props) {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + props.currentUserProp.jwt_token
+                'Authorization': 'Bearer ' + (props.currentUserProp ? props.currentUserProp.jwt_token : null)
             }
         }
 
         axios.post('https://akademia108.pl/api/social-app/follows/recommendations', {}, axiosConfig)
             .then(res => setNewRecommendations(res.data))
-            .catch(err => `Recommendations' query caused this error: ${err} `);
+            .catch(err => console.log(`Recommendations' query caused this error: ${err} `));
     }, [])
 
     let recommendationsList = recommendations.map(recommendation => {
