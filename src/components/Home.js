@@ -113,7 +113,8 @@ class Home extends Component {
                 {
                     this.props.currentUserProp &&
                     <Recommendations
-                        tokenCheckMethod={this.props.tokenCheckMethod}
+                        clearUserMethod={this.props.clearUserMethod}
+                        currentUserProp={this.props.currentUserProp}
                     />
                 }
                 <div className="container">

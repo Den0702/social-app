@@ -4,30 +4,51 @@ import axios from "axios";
 
 import '../css/Recommendations.css';
 
-
 export default function Recommendations(props) {
 
     let [recommendations, setNewRecommendations] = useState([]);
 
     useEffect(() => {
-        props.tokenCheckMethod();
+        getRecommendations();
 
-        const axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + (props.currentUserProp ? props.currentUserProp.jwt_token : null)
-            }
+        let refreshId = setInterval(() => {
+            getRecommendations();
+        }, 10000);
+
+        return () => {
+            clearInterval(refreshId);
         }
+    }, []);
 
-        axios.post('https://akademia108.pl/api/social-app/follows/recommendations', {}, axiosConfig)
-            .then(res => setNewRecommendations(res.data))
-            .catch(err => console.log(`Recommendations' query caused this error: ${err} `));
-    }, [])
+    function getRecommendations() {
+        if (props.currentUserProp) {
+            const axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + (props.currentUserProp ? props.currentUserProp.jwt_token : null)
+                }
+            }
+
+            axios.post('https://akademia108.pl/api/social-app/follows/recommendations', {}, axiosConfig)
+                .then(res => {
+                    setNewRecommendations(res.data);
+                    return true;
+                })
+                .catch(err => {
+                        console.log(`Recommendations' query caused this error: ${err} `);
+                        props.clearUserMethod();
+
+                        //clearInterval(refreshId);
+                        //return false;
+                    }
+                );
+        }
+    }
 
     let recommendationsList = recommendations.map(recommendation => {
         return (
-            <div className="recommendation">
+            <div className="recommendation" key={recommendation.id}>
                 <div className="avatar-holder">
                     <img src={recommendation.avatar_url} alt="userPhoto" />
                 </div>
@@ -40,12 +61,12 @@ export default function Recommendations(props) {
             </div>
         )
 
-})
+    })
 
-return (
-    <div className="recommendations">
-        {recommendationsList}
-    </div>
-)
+    return (
+        <div className="recommendations">
+            {recommendationsList}
+        </div>
+    )
 }
 

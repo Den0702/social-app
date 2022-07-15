@@ -11,8 +11,8 @@ import LogIn from './LogIn';
 
 class App extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         /* Initial state jest ustawiany albo na zalogowanego uzytkownika albo na nic */
         this.state = {
             currentUser: localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null,
@@ -53,6 +53,7 @@ class App extends Component {
     }
 
     clearUser = () => {
+        //ten warunek sie przydaje gdy ta metoda jest wywolywana z poziomu innego komponentu
         if (this.state.currentUser) {
             localStorage.removeItem('currentUser')
             this.setState({ currentUser: null })
