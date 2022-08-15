@@ -6,8 +6,9 @@ import axios from 'axios';
 /* Routes */
 import SignUp from './SignUp';
 import Home from './Home';
-import NonExisting from './NonExisting';
 import LogIn from './LogIn';
+import AllFollows from './AllFollows';
+import NonExisting from './NonExisting';
 
 class App extends Component {
 
@@ -18,7 +19,11 @@ class App extends Component {
             currentUser: localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null,
             isMessageVisible: true,
         }
-    }
+        
+        /* axios.defaults.headers.common['Authorization'] = 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null);
+        axios.defaults.headers.post['Content-Type'] = 'application/json'; */
+    } 
+
 
     saveCurrentUserData = (user) => {
         //alert('Save Users data!');
@@ -26,11 +31,13 @@ class App extends Component {
             currentUser: user
         })
     }
-
-    componentDidMount() {
-        //wyslac zapytanie do backendu, czy token jest wazny(zapytanie o profil uzytkownika), inaczej wyczyscic jego dane z localStorage
+    
+    //ta metoda jest wywoływana bezpośrednio w przypadku, gdy wywołanie metody isTokenValid nie jest niezbędne 
+    clearUser = () => {
+        //ten warunek sie przydaje gdy ta metoda jest wywolywana z poziomu innego komponentu
         if (this.state.currentUser) {
-            this.isTokenValid();
+            localStorage.removeItem('currentUser')
+            this.setState({ currentUser: null })
         }
     }
 
@@ -46,19 +53,11 @@ class App extends Component {
         axios.post('https://akademia108.pl/api/social-app/user/profile',
             {},
             axiosConfig
-        ).then(res => console.log(res)
         ).catch(() => {
             this.clearUser();
         })
     }
 
-    clearUser = () => {
-        //ten warunek sie przydaje gdy ta metoda jest wywolywana z poziomu innego komponentu
-        if (this.state.currentUser) {
-            localStorage.removeItem('currentUser')
-            this.setState({ currentUser: null })
-        }
-    }
 
     signUserOut = (e) => {
         //TO DO - powinien tutaj być preventDefault - bo inaczej wypali zdarzenie domyslne - przejscie do URL wskazanego przez linka
@@ -78,7 +77,6 @@ class App extends Component {
             axiosConfig
         )
             .then(res => {
-                console.log(res.data);
                 // jezeli dostamy pozytywna odpowiedz o wylogowaniu, to wtedy odswiezymy stan uzytkownika + wiadomosc o pozytywnym wylogowaniu
                 this.setState(() => {
                     return {
@@ -98,6 +96,14 @@ class App extends Component {
 
     }
 
+    componentDidMount() {
+        //wyslac zapytanie do backendu, czy token jest wazny(zapytanie o profil uzytkownika), inaczej wyczyscic jego dane z localStorage
+        if (this.state.currentUser) {
+            this.isTokenValid();
+        }
+        
+    }
+
     render() {
 
         return (
@@ -111,6 +117,8 @@ class App extends Component {
 
                             {!this.state.currentUser && <li> <Link to="/login">Logowanie</Link> </li>}
 
+                            {this.state.currentUser && <li> <Link to="/allfollows">Subskrypcje</Link></li>}
+                            
                             {this.state.currentUser && <li> <Link to="#" onClick={(e) => this.signUserOut(e)}>Wyloguj </Link></li>}
                         </ul>
                         {this.state.isMessageVisible && this.state.logoutSuccessMessage && <p className="logout-success">{this.state.logoutSuccessMessage}</p>}
@@ -139,7 +147,19 @@ class App extends Component {
                             />
                         }
                     />
-                    <Route path="*" element={<NonExisting />} />
+                        {this.state.currentUser && <Route 
+                            path="allfollows" 
+                            element={
+                                <AllFollows 
+                                    currentUserProp={this.state.currentUser}
+                                />
+                            } 
+                        />
+                        }
+                    <Route 
+                        path="*" 
+                        element={<NonExisting />} 
+                    />
                 </Routes>
             </div>
         );
