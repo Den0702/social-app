@@ -6,27 +6,20 @@ import { Navigate } from "react-router-dom";
 export default function LogIn(props) {
 
     const [username, setUsername] = useState('');
-    const [usernameEmpty, setUsernameError] = useState(false);
+    const [usernameError, setUsernameError] = useState('');
 
     const [passwd, setPasswd] = useState('');
-    const [passwdEmpty, setPasswdError] = useState(false);
-    
-    useEffect(() => {
-        document.body.style.backgroundColor = "#1ba4ce";
-        
-        //kiedy bedziemy sie przelaczac na inny komponent, to to spowoduje, ze background-color stanie sie null'em 
-        return () => {
-            document.body.style.backgroundColor = null;
-        }
-    }, [])
+    const [passwdError, setPasswdError] = useState('');
+
+    const [unexistUserMessage, setUnexistUserMessage] = useState('');
 
     function signUserIn(event) {
         event.preventDefault();
 
-        const sendData = {
+        const sentData = {
             'username': `${username}`,
             'password': `${passwd}`,
-            'ttl': 5 /* czas w minutach, po którym token uzytkownika przestanie byc wazny */
+            'ttl': 300 /* czas w minutach, po którym token uzytkownika przestanie byc wazny */
         }
 
         const axiosConfig = {
@@ -38,25 +31,29 @@ export default function LogIn(props) {
 
         axios.post(
             'https://akademia108.pl/api/social-app/user/login', 
-            sendData, 
+            sentData, 
             axiosConfig
         )
-        .then(res => {
-            console.log(res);
+        .then(res => {            
+            if (Array.isArray(res.data.username)) {
+                setUsernameError(res.data.username[0]);
+            } else {
+                setUsernameError('');
+            }
+            
+            if (Array.isArray(res.data.password)) {
+                setPasswdError(res.data.password[0]);
+            } else {
+                setPasswdError('');
+            } 
+            
+            if (res.data.error) {
+                setUnexistUserMessage('Nie ma takiego użytkownika. Używaj tylko tych predefiniowanych')
 
-            if (!(typeof(res.data.username) === 'object') && !(typeof(res.data.password) === 'object')) {
+            } else if (!Array.isArray(res.data.username) && !Array.isArray(res.data.password)) {
                 const currentUser = res.data;
                 props.saveCurrentUserData(currentUser);//zeby zapisac obiekt uzytkownika do stanu w App         
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));//i jednoczesnie zapisac do localStorage
-            } else {
-                /* jesli jest komunikat w odpowiedzi z serwera o tym, ze pole username jest puste */
-                if (typeof(res.data.username) === 'object') {
-                    setUsernameError(true);
-                }
-                /* -- || --, ze pole password jest puste */
-                if(typeof(res.data.password) === 'object') {
-                    setPasswdError(true);
-                }
             }
         })
         .catch(error => console.log(`The signUserIn's query caused this error: ${error}`));
@@ -73,25 +70,25 @@ export default function LogIn(props) {
                 action=""
                 onSubmit={(e) => signUserIn(e)}
             >
-                <label htmlFor="username" className={usernameEmpty ? 'error' : ''}>Nazwa użytkownika</label>
+                <label htmlFor="username" className={usernameError ? 'error' : ''}>Nazwa użytkownika</label>
                 <input
                     onChange={(e) => setUsername(e.target.value)}
                     type="text" 
                     id="username"
-                    className={`input-item ${usernameEmpty ? 'error' : ''}`}
+                    className={`input-item ${usernameError ? 'error' : ''}`}
                 />
 
-                <label htmlFor="passwd" className={passwdEmpty ? 'error' : ''}>Hasło</label>
+                <label htmlFor="passwd" className={passwdError ? 'error' : ''}>Hasło</label>
                 <input
                     onChange={(e) => setPasswd(e.target.value)}
-                    type="text" 
+                    type="password" 
                     id="passwd"
-                    className={`input-item ${passwdEmpty ? 'error' : ''}`}
+                    className={`input-item ${passwdError ? 'error' : ''}`}
                 />
 
-                {usernameEmpty && <p>Proszę podać nazwę użytkownika</p>}
-                {passwdEmpty && <p>Proszę podać hasło</p>}
-                
+                {usernameError && <p>{usernameError}</p>}
+                {passwdError && <p>{passwdError}</p>}
+                {!usernameError && !passwdError && unexistUserMessage && <p>{unexistUserMessage}</p>} 
                 <button type="submit" className="btn btn-submit">Zaloguj się</button>
             </form>
         </section>
