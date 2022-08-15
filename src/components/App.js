@@ -20,8 +20,8 @@ class App extends Component {
             isMessageVisible: true,
         }
         
-        /* axios.defaults.headers.common['Authorization'] = 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null);
-        axios.defaults.headers.post['Content-Type'] = 'application/json'; */
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null);
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
     } 
 
 
