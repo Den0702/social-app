@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import '../css/Recommendations.css';
+import '../css/FollowRecommendations.css';
 
 export default function Recommendations(props) {
 

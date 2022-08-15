@@ -1,11 +1,10 @@
 /* eslint-disable default-case */
 import React, { Component } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 
 import PostAdd from './PostAdd';
 import Post from './Post';
-import Recommendations from './Recommendations';
+import FollowRecommendations from './FollowRecommendations';
 
 class Home extends Component {
     constructor(props) {
@@ -112,7 +111,7 @@ class Home extends Component {
             <section className="home">
                 {
                     this.props.currentUserProp &&
-                    <Recommendations
+                    <FollowRecommendations
                         clearUserMethod={this.props.clearUserMethod}
                         currentUserProp={this.props.currentUserProp}
                     />
