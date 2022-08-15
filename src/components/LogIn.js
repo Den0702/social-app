@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import '../css/Login.css';
 import { Navigate } from "react-router-dom";
@@ -48,7 +48,7 @@ export default function LogIn(props) {
             } 
             
             if (res.data.error) {
-                setUnexistUserMessage('Nie ma takiego użytkownika. Używaj tylko tych predefiniowanych')
+                setUnexistUserMessage('Nie ma takiego użytkownika (Używaj tylko tych predefiniowanych)')
 
             } else if (!Array.isArray(res.data.username) && !Array.isArray(res.data.password)) {
                 const currentUser = res.data;

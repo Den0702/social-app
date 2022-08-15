@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../css/SignUp.css';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 class SignUp extends Component {
 
@@ -17,7 +18,8 @@ class SignUp extends Component {
             confirmPasswd: '',
             confirmPasswdError: '',
 
-            response: ''
+            response: '',
+            signUpDone: false
         }
     }
 
@@ -85,7 +87,6 @@ class SignUp extends Component {
             })
         }
         //----walidacja hasła-----
-        //dorobić w sprawdzeniu hasła, czy składa się ono z co najmniej 1 cyfry
         if (this.state['passwd'] !== '') {
             const arrFromPasswd = Array.from(this.state['passwd']);
             let passwdCorrect = false;
@@ -170,19 +171,16 @@ class SignUp extends Component {
             axiosConfig
         ).then(res => {
             if (res.data.signedup) {
-                this.setState(() => {
-                    return { response: `Dziękujemy, ${res.data.user.username}, jesteś zarejestrowany` }
+                this.setState({
+                    response: `Dziękujemy, ${res.data.user.username}, jesteś zarejestrowany`,
+                    signUpDone: true
                 })
+            } else if (res.data.message.username) {
+                this.setState({ response: `Błąd: ${res.data.message.username[0]}` })
+            } else if (res.data.message.email) {
+                this.setState({ response: `Błąd: ${res.data.message.email[0]}` })
             }
-        }).catch(err => console.log("Błąd: ", err.message.username[0]));
-    }
-
-    componentDidMount() {
-        document.body.style.backgroundColor = '#1ba4ce';
-    }
-
-    componentWillUnmount() {
-        document.body.style.backgroundColor = null;
+        }).catch(err => console.log("Błąd: ", err));
     }
 
     render() {
@@ -211,25 +209,29 @@ class SignUp extends Component {
                     <label htmlFor="passwd" className={this.state.passwdError ? 'error' : ''}>Hasło</label>
                     <input
                         onChange={this.handleUserPasswd}
-                        type="text" id="passwd"
+                        type="password" id="passwd"
                         className={`input-item ${this.state.passwdError ? 'error' : ''}`}
                     />
 
                     <label htmlFor="confirm-passwd" className={this.state.confirmPasswdError ? 'error' : ''}>Potwierdzenie hasła</label>
                     <input
                         onChange={this.handleConfirmPasswd}
-                        type="text" id="confirm-passwd"
+                        type="password" id="confirm-passwd"
                         className={`input-item ${this.state.confirmPasswdError ? 'error' : ''}`}
                     />
 
-                    {!(this.state.loginError === '') && <p>{this.state.loginError}</p>}
-                    {!(this.state.emailError === '') && <p>{this.state.emailError}</p>}
-                    {!(this.state.passwdError === '') && <p>{this.state.passwdError}</p>}
-                    {!(this.state.confirmPasswdError === '') && <p>{this.state.confirmPasswdError}</p>}
+                    {!(this.state.loginError === '') && <p className='clientErrorMessage'>{this.state.loginError}</p>}
+                    {!(this.state.emailError === '') && <p className='clientErrorMessage'>{this.state.emailError}</p>}
+                    {!(this.state.passwdError === '') && <p className='clientErrorMessage'>{this.state.passwdError}</p>}
+                    {!(this.state.confirmPasswdError === '') && <p className='clientErrorMessage'>{this.state.confirmPasswdError}</p>}
                     {/* Jak odpowiedź nie jest pusta to pokaż ją */}
-                    {this.state.response !== '' && <p>{this.state.response}</p>}
+                    {this.state.response !== '' && <p className="serverResponse">{this.state.response}</p>}
 
-                    <button type="submit" className="btn btn-submit">Zarejestruj się</button>
+                    {this.state.signUpDone ?
+                        <Link to="/login" className="btn login-redirect">Przejdź do logowania</Link>
+                            :
+                        <button type="submit" className="btn btn-submit">Zarejestruj się</button>
+                    }
                 </form>
             </section>
         );
