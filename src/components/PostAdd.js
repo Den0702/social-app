@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import '../css/PostAdd.css';
 import axios from "axios";
 
 class PostAdd extends Component {
@@ -34,7 +34,6 @@ class PostAdd extends Component {
                 data,
                 axiosConfig
             ).then(res => {
-                    console.log(res);
                     this.setState({ message: res.data.message })
                     this.props.getNewerPosts();//zeby strona sie odswiezyla i ten nowoutworzony post sie pojawil
                     this._userPostTextField.value = '';
