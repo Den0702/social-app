@@ -4,7 +4,7 @@ import axios from "axios";
 
 import '../css/FollowRecommendations.css';
 
-export default function Recommendations(props) {
+export default function FollowRecommendations(props) {
 
     let [recommendations, setNewRecommendations] = useState([]);
 
@@ -36,14 +36,34 @@ export default function Recommendations(props) {
                     return true;
                 })
                 .catch(err => {
-                        console.log(`Recommendations' query caused this error: ${err} `);
+                        console.log(`FollowRecommendations' query caused this error: ${err} `);
                         props.clearUserMethod();
-
-                        //clearInterval(refreshId);
-                        //return false;
                     }
                 );
         }
+    }
+
+    function follow(id) {
+        const axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + props.currentUserProp.jwt_token 
+            }
+        }
+
+        axios.post(
+            "https://akademia108.pl/api/social-app/follows/follow",
+            { leader_id: id },
+            axiosConfig
+        )
+        .then(() => {
+            props.getPostsLatest();
+        })
+        .catch((error) => {
+            console.error(error);
+            props.clearUserMethod();
+        });
     }
 
     let recommendationsList = recommendations.map(recommendation => {
@@ -55,7 +75,7 @@ export default function Recommendations(props) {
                 <p className="user-name">
                     {recommendation.username}
                 </p>
-                <button className="btn follow-btn">
+                <button className="btn follow-btn" onClick={() => follow(recommendation.id)}>
                     Follow
                 </button>
             </div>
