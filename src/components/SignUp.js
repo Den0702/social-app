@@ -106,8 +106,8 @@ class SignUp extends Component {
                     }
                 }
                 if (!passwdCorrect) {
+                    dataReadyToBeSent = false;
                     this.setState(() => {
-                        dataReadyToBeSent = false;
                         return { passwdError: 'Niewystarczająco mocne hasło! (musi zawierać !, #, @, $ lub %)' }
                     });
                 }
