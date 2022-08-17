@@ -12,3 +12,14 @@
     }
 }
  */
+
+ .btn.older {
+    color: #fff;
+    background-color: #35343b;
+ }
+
+ .btn.older:hover {
+     color: #35343b;
+     background-color: #fff;
+     transition: all .3s;
+ }
