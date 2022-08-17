@@ -2,10 +2,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import '../css/Home.css';
-import PostAdd from './PostAdd';
-import Post from './Post';
-import FollowRecommendations from './FollowRecommendations';
+import '../../css/Home.css';
+import PostAdd from '../PostAdd';
+import Post from '../Post';
+import FollowRecommendations from '../FollowRecommendations';
 
 class Home extends Component {
     constructor(props) {

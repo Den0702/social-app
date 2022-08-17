@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import '../css/Login.css';
+import '../../css/Login.css';
 import { Navigate } from "react-router-dom";
 
 export default function LogIn(props) {

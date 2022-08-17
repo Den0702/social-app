@@ -4,11 +4,11 @@ import { Link } from "react-router-dom"
 import '../css/App.css';
 import axios from 'axios';
 /* Routes */
-import SignUp from './SignUp';
-import Home from './Home';
-import LogIn from './LogIn';
-import AllFollows from './AllFollows';
-import NonExisting from './NonExisting';
+import SignUp from './views/SignUp';
+import Home from './views/Home';
+import LogIn from './views/LogIn';
+import AllFollows from './views/AllFollows';
+import NonExisting from './views/NonExisting';
 
 class App extends Component {
 

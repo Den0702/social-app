@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import '../css/AllFollows.css';
+import '../../css/AllFollows.css';
 
 export default function AllFollows(props) {
     const [follows, setFollows] = useState([]);
