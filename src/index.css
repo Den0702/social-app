@@ -47,6 +47,7 @@ section {
     margin-top: 2em;
     cursor: pointer;
     border: 0;
+    transition-duration: .3s;
 }
 
 .btn:hover,
@@ -67,11 +68,15 @@ section {
 .btn-submit:hover {
     background-color: #fff;
     color: #e66f40;
-    transition: all .3s;
 }
 
 h2, p {
     margin: 0;
+}
+
+h3 {
+    width: 100%;
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 ul {

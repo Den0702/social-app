@@ -68,7 +68,11 @@
 .unfollow-btn:hover {
     color: #1ba4ce;
     background-color: #fff;
-    transition-duration: .4s;
+}
+
+.follow-btn:hover {
+    color: #1ba4ce;
+    background-color: #fff;
 }
 
 .delete-post {
