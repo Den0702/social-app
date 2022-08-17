@@ -22,17 +22,9 @@ export default function LogIn(props) {
             'ttl': 300 /* czas w minutach, po którym token uzytkownika przestanie byc wazny */
         }
 
-        const axiosConfig = {
-            'headers': {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            }
-        }
-
         axios.post(
             'https://akademia108.pl/api/social-app/user/login', 
             sentData, 
-            axiosConfig
         )
         .then(res => {            
             if (Array.isArray(res.data.username)) {

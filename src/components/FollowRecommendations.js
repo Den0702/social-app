@@ -22,15 +22,7 @@ export default function FollowRecommendations(props) {
 
     function getRecommendations() {
         if (props.currentUserProp) {
-            const axiosConfig = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + (props.currentUserProp ? props.currentUserProp.jwt_token : null)
-                }
-            }
-
-            axios.post('https://akademia108.pl/api/social-app/follows/recommendations', {}, axiosConfig)
+            axios.post('https://akademia108.pl/api/social-app/follows/recommendations')
                 .then(res => {
                     setNewRecommendations(res.data);
                     return true;
@@ -44,18 +36,9 @@ export default function FollowRecommendations(props) {
     }
 
     function follow(id) {
-        const axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + props.currentUserProp.jwt_token 
-            }
-        }
-
         axios.post(
             "https://akademia108.pl/api/social-app/follows/follow",
-            { leader_id: id },
-            axiosConfig
+            { leader_id: id }
         )
         .then(() => {
             props.getPostsLatest();

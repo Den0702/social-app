@@ -6,18 +6,8 @@ import '../css/AllFollows.css';
 export default function AllFollows(props) {
     const [follows, setFollows] = useState([]);
 
-    const axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + props.currentUserProp?.jwt_token
-        }
-    }
-
     useEffect(() => {
-        axios.post('https://akademia108.pl/api/social-app/follows/allfollows',
-            {},
-            axiosConfig
+            axios.post('https://akademia108.pl/api/social-app/follows/allfollows'       
         )
             .then(res => {
                 setFollows(res.data);
@@ -34,8 +24,7 @@ export default function AllFollows(props) {
         }
 
         axios.post('https://akademia108.pl/api/social-app/follows/disfollow',
-            sentData,
-            axiosConfig
+            sentData
         ).then(res => {
             setFollows( follows.filter(follow => follow.id !== res.data.leader_id) );
 

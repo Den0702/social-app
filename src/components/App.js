@@ -12,16 +12,13 @@ import NonExisting from './NonExisting';
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         /* Initial state jest ustawiany albo na zalogowanego uzytkownika albo na nic */
         this.state = {
             currentUser: localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null,
             isMessageVisible: true,
         }
-        
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null);
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
     } 
 
 
@@ -63,18 +60,9 @@ class App extends Component {
         //TO DO - powinien tutaj być preventDefault - bo inaczej wypali zdarzenie domyslne - przejscie do URL wskazanego przez linka
         e.preventDefault();
         //alert('Sign Out!');
-        const axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + this.state.currentUser.jwt_token
-            }
-        };
 
         axios.post(
-            'https://akademia108.pl/api/social-app/user/logout',
-            {},//poniewaz nie ma danych do wysłania, to wypełnia się to pustym obiektem
-            axiosConfig
+            'https://akademia108.pl/api/social-app/user/logout'
         )
             .then(res => {
                 // jezeli dostamy pozytywna odpowiedz o wylogowaniu, to wtedy odswiezymy stan uzytkownika + wiadomosc o pozytywnym wylogowaniu
@@ -101,7 +89,15 @@ class App extends Component {
         if (this.state.currentUser) {
             this.isTokenValid();
         }
-        
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null);
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
+    }
+
+    componentDidUpdate() {
+        //reinicjalizacja domyslnych naglowkow po aktualizacji komponentu App
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null);
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
     }
 
     render() {
@@ -141,7 +137,6 @@ class App extends Component {
                         path="login"
                         element={
                             <LogIn
-                                /* logoutMethod={this.signUserOut} */
                                 saveCurrentUserData={this.saveCurrentUserData}
                                 currentUserProp={this.state.currentUser}
                             />

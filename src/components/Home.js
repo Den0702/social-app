@@ -16,15 +16,7 @@ class Home extends Component {
     }
 
     getPostsLatest = () => {
-        const axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                //przy zalogowaniu dostaje sie tylko posty ktore sie subskrybuje
-                'Authorization': 'Bearer ' + (this.props.currentUserProp ? this.props.currentUserProp.jwt_token : null)
-            }
-        }
-        axios.post('https://akademia108.pl/api/social-app/post/latest', {}, axiosConfig)
+        axios.post('https://akademia108.pl/api/social-app/post/latest')
             .then(res => {
                 /* przekazujemy do setState tylko obiekt(nie funkcje), poniewaz nie polegamy na poprzednim stanie */
                 this.setState({
@@ -36,21 +28,13 @@ class Home extends Component {
     }
 
     getPostsOlderThen = () => {
-        const axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + (this.props.currentUserProp ? this.props.currentUserProp.jwt_token : null)
-            }
-        }
         const requestData = {
             date: this.state.postsList[this.state.postsList.length - 1].created_at
         }
 
         axios.post(
             'https://akademia108.pl/api/social-app/post/older-then',
-            JSON.stringify(requestData),
-            axiosConfig
+            JSON.stringify(requestData)
         )
             .then(res => {
                 this.setState({
@@ -61,20 +45,12 @@ class Home extends Component {
     }
 
     getPostsNewerThen = () => {
-        const axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + (this.props.currentUserProp ? this.props.currentUserProp.jwt_token : null)
-            }
-        }
         const requestData = {
             date: this.state.postsList[0].created_at
         }
 
         axios.post('https://akademia108.pl/api/social-app/post/newer-then',
-            requestData,
-            axiosConfig
+            requestData
         )
             .then(res =>
                 this.setState({
@@ -82,6 +58,10 @@ class Home extends Component {
                 })
             )
             .catch(err => console.log(`Home: The getPostsNewerThen's query caused this error: ${err}`))
+    }
+
+    setPostsAfterDelete = (posts) => {
+        this.setState({ postsList: posts})
     }
 
     //ta metoda uruchamia sie przy pierwszym zaladowaniu komponentu
@@ -103,6 +83,9 @@ class Home extends Component {
                     key={userPost.id}
                     currentUserProp={this.props.currentUserProp}
                     clearUserMethod={this.props.clearUserMethod}
+                    getPostsLatest={this.getPostsLatest}
+                    setPostsAfterDelete={this.setPostsAfterDelete}
+                    postsList={this.state.postsList}
                 />
             )
         });
@@ -114,6 +97,7 @@ class Home extends Component {
                     <FollowRecommendations
                         clearUserMethod={this.props.clearUserMethod}
                         currentUserProp={this.props.currentUserProp}
+                        getPostsLatest={this.getPostsLatest}
                     />
                 }
                 <div className="container">
@@ -127,7 +111,7 @@ class Home extends Component {
                 </div>
 
                 <button
-                    className="btn"
+                    className="btn older"
                     onClick={this.getPostsOlderThen}>
                     showOlder
                 </button>
