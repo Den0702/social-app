@@ -13,7 +13,7 @@ export default function FollowRecommendations(props) {
 
         let refreshId = setInterval(() => {
             getRecommendations();
-        }, 1000000);
+        }, 10000);
 
         return () => {
             clearInterval(refreshId);
