@@ -1,6 +1,7 @@
 # Web-application description
 This is a project of the web-application modelling the behaviour of social media (taking an example from twitter). It allows to _sign_ user _up_ and _in_[^1], _show_, _add_ and _remove_ posts from feed, _add_ and _remove_ likes, gives the possibility of _subscribing_ other users.
 
+## Working [demo](https://den0702.github.io/social-app/)
 ## Technologies and tools used
 - **React** for building the interface and behaviour of the application
 - **_React-router-dom_** for navigating between components (app's main menu)
