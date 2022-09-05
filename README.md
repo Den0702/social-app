@@ -3,7 +3,7 @@ This is a project of the web-application modelling the behaviour in the context 
 
 ## Working [demo](https://den0702.github.io/social-app/)
 ## Technologies and tools used
-- **React** for building the interface and behaviour of the application
+- **React(v17.0.2)** for building the interface and behaviour of the application
 - **_React-router-dom_** for navigating between components (app's main menu)
 - The **_Axios_** library for creating HTTP-requests
 - **_Local Storage_** to store signed user data
