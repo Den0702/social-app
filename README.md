@@ -20,7 +20,7 @@ The signing in process works only for predefined users:
 [Akademia 108](https://akademia108.pl/) - API and documentation
 
 ## App launch method
-In the root project directory run the following commands in the console (which supports git commands):
+Run the following commands in the console in the root project's directory (which supports git commands):
 ``` 
 npm install
 npm start
