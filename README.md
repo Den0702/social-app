@@ -1,6 +1,7 @@
 # Description of the web-application 
 This is a project of a web-application modelling behaviour of some features of a social media service (taking an example from _twitter_). It allows to sign user up and in[^1], show, add and remove posts from feed, add and remove likes, gives the possibility of subscribing other users.
-
+## Main features  
+Mobile-first design, responsive layout
 ## Working [demo](https://den0702.github.io/social-app/)
 ## Technologies and tools used
 - **React(v17.0.2)** for building the interface and behaviour of the application
