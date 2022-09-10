@@ -1,8 +1,18 @@
-# Description of the web-application 
-This is a project of a web-application modelling behaviour of some features of a social media service (taking an example from _twitter_). It allows to sign user up and in[^1], show, add and remove posts from feed, add and remove likes, gives the possibility of subscribing other users.
-## Main features  
-Mobile-first design, responsive layout
+# Brief description of the web-application 
+This is a project of a web-application modelling behaviour of some features of a social media service (taking an example from _twitter_). It gives the possibility of creating an account[^1], browsing feed, liking posts, subscribing other users.
+
+## Main features
+- Signing user up and in
+- Showing, adding and removing posts
+- Adding and removing likes from posts
+- Showing subscribing recommendations
+- Subscribing and showing list of subscriptions
+- Forms with validation
+- Mobile-first design  
+- Responsive layout
+
 ## Working [demo](https://den0702.github.io/social-app/)
+
 ## Technologies and tools used
 - **React(v17.0.2)** for building the interface and behaviour of the application
 - **_React-router-dom_** for navigating between components (app's main menu)
@@ -18,7 +28,10 @@ The signing in process works only for predefined users:
 **_possible user's names as login_**: artur, marek, adam, slawek, mietek, tomek, kasia, janek, piotrek
 
 ## References
-[Akademia 108](https://akademia108.pl/) - API and documentation
+[Akademia 108](https://akademia108.pl/) - API and documentation  
+[Font Awesome](fontawesome.com) - Icons  
+[Google Fonts](https://fonts.google.com/) - Fonts: Open Sans and Bellota
+
 
 ## App launch method
 Run the following commands in the console in the root project's directory (which supports git commands):
