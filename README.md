@@ -1,5 +1,5 @@
 # Brief description of the web-application 
-This is a project of a web-application modelling behaviour of some features of a social media service (taking an example from _twitter_). It gives the possibility of creating an account[^1], browsing feed, liking posts, subscribing other users.
+This is a web-application project modelling behaviour of some features of a social media service (taking an example from _twitter_). It gives the possibility of creating an account[^1], browsing feed, liking posts, subscribing other users.
 
 ## Main features
 - Signing user up and in
