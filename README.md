@@ -17,8 +17,8 @@ This is a project of a web-application modelling behaviour of some features of a
 - **React(v17.0.2)** for building the interface and behaviour of the application
 - **_React-router-dom_** for navigating between components (app's main menu)
 - The **_Axios_** library for creating HTTP-requests
-- **_Local Storage_** to store signed user data
-- **_JSON Web Token_** to allow performing operations that involve data exchange between the app and server and need authentication
+- **_JSON Web Token_** (JWT) to allow performing operations that involve data exchange between the app and server and need authentication
+- **_Local Storage_** to store JWT and signed user data
 - **CSS** to style the user interface
 - **_Font Awesome_** for setting infographics
 
