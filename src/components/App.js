@@ -132,7 +132,10 @@ class App extends Component {
                             />
                         }
                     />
-                    <Route path="signup" element={<SignUp />} />
+                    <Route 
+                        path="signup" 
+                        element={<SignUp />} 
+                    />
                     <Route
                         path="login"
                         element={
@@ -142,15 +145,15 @@ class App extends Component {
                             />
                         }
                     />
-                        {this.state.currentUser && <Route 
-                            path="allfollows" 
-                            element={
-                                <AllFollows 
-                                    currentUserProp={this.state.currentUser}
-                                />
-                            } 
-                        />
-                        }
+                    {this.state.currentUser && <Route 
+                        path="allfollows" 
+                        element={
+                            <AllFollows 
+                                currentUserProp={this.state.currentUser}
+                            />
+                        } 
+                    />
+                    }
                     <Route 
                         path="*" 
                         element={<NonExisting />} 

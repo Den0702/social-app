@@ -38,7 +38,7 @@ section {
     background-color: inherit;
     padding: 3px 7px;
     margin: 6px 0 6px;
-    color: #fff;
+    color: #d4a6a6;
 }
 
 .btn {
@@ -114,19 +114,8 @@ span {
     }
 }
 
+/* dziala zarowno w chrome jak i w firefox */
 input:-webkit-autofill {
     -webkit-text-fill-color: #d4a6a6;
     -webkit-box-shadow: 0 0 0px 1000px #2b2a33 inset;
-}
-input:-moz-autofill {
-    -moz-text-fill-color: #d4a6a6;
-    -moz-box-shadow: 0 0 0px 1000px #2b2a33 inset;
-}
-input:-o-autofill {
-    -o-text-fill-color: #d4a6a6;
-    -o-box-shadow: 0 0 0px 1000px #2b2a33 inset;
-}
-input:-khtml-autofill {
-    -khtml-text-fill-color: #d4a6a6;
-    -khtml-box-shadow: 0 0 0px 1000px #2b2a33 inset;
 }
