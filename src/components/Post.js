@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import axios from 'axios';
 
-import { transformDate } from '../helpers/transformDate';
 import '../css/Post.css';//nie piszemy 'from' przy importowaniu css'a, bo to jest składnia Webpack'a
 
 //import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import dayjs from 'dayjs';
+import 'dayjs/locale/pl';
 
 class Post extends Component {
     constructor(props) {
         super(props);
+
 
         this.state = {
             liked: false,
@@ -157,7 +159,7 @@ class Post extends Component {
                     </p>
                     <hr />
                     <div className="post-date">
-                        {transformDate(this.props.userPost.created_at)}
+                        {dayjs(this.props.userPost.created_at).locale('pl').format('DD MMM YYYY HH:MM')}
                     </div>
                     <div className="post-like">
                         <button
