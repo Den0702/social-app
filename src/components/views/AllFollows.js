@@ -13,7 +13,8 @@ export default function AllFollows(props) {
                 setFollows(res.data);
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
+                props.clearUserMethod();
             });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -30,7 +31,7 @@ export default function AllFollows(props) {
 
         }).catch(error => {
             console.log(error);
-            this.props.clearUserMethod();
+            props.clearUserMethod();
         })
     }
 
