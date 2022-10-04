@@ -162,7 +162,7 @@ class Post extends Component {
                     </div>
                     <div className="post-like">
                         <button
-                            onClick={!this.state.liked ? this.postAddLike : this.postRemoveLike}
+                            onClick={this.props.currentUserProp && (!this.state.liked ? this.postAddLike : this.postRemoveLike)}
                             className={`btn like-btn ${!this.props.currentUserProp && 'unactive'}`}
                         >
                             {
