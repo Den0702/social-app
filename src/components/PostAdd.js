@@ -12,39 +12,26 @@ class PostAdd extends Component {
     }
 
     addPost = (event) => {
-        //alert('addPost')
         event.preventDefault();
 
-        const data = {
+        const postContent = {
             content: this._userPostTextField.value
         }
 
         //jezeli post nie jest pusty
-        if (data.content) {
-            let axiosConfig = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + this.props.currentUserProp.jwt_token
-                }
-            };
-
+        if (postContent.content) {
             axios.post(
                 'https://akademia108.pl/api/social-app/post/add',
-                data,
-                axiosConfig
+                postContent
             ).then(res => {
                     this.setState({ message: res.data.message })
                     this.props.getNewerPosts();//zeby strona sie odswiezyla i ten nowoutworzony post sie pojawil
                     this._userPostTextField.value = '';
                 }
             ).catch(error => {
-                console.log(`addPost's query caused this error: ${error.data.message}`);
-
-                this.props.clearUserMethod();
-
-                this.setState({ message: error.data.message})
+                console.log(`addPost's query caused this error: ${error.message}`);
                 this._userPostTextField.value = '';
+                this.props.clearUserMethod();
             })
         }
 
