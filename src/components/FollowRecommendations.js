@@ -67,12 +67,10 @@ export default function FollowRecommendations(props) {
     })
 
     return (
-        recommendationsList.length !== 0 ? 
-            <div className="recommendations">
-                <h3>Osoby, które możesz znać</h3>
-                {recommendationsList}
-            </div>
-         : <h3>Obecnie subskrybujesz wszystkich</h3>
+        <div className="recommendations">
+            <h3>Osoby, które możesz znać</h3>
+            {recommendationsList}
+        </div>
     )
 }
 

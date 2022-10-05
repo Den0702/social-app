@@ -76,7 +76,7 @@ class SignUp extends Component {
             this.setState(() => {
                 return { emailError: 'Podaj adres email' };
             })
-        } else if (!(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(this.state.email.trim()))) {
+        } else if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(this.state.email.trim())) {
             dataReadyToBeSent = false;
             this.setState(() => {
                 return { emailError: 'Niepoprawny adres email' };
@@ -201,7 +201,7 @@ class SignUp extends Component {
                     <label htmlFor="email" className={this.state.emailError ? 'error' : ''}>Adres email</label>
                     <input
                         onChange={this.handleUserEmail}
-                        type="text"
+                        type="email"
                         id="email"
                         className={`input-item ${this.state.emailError ? 'error' : ''}`}
                     />
