@@ -67,30 +67,26 @@ class Home extends Component {
 
     //ta metoda uruchamia sie przy pierwszym zaladowaniu komponentu
     componentDidMount() {
-        if(this.props.currentUserProp) {
-            this.props.tokenCheckMethod();
-        }
         this.getPostsLatest();
     }
 
     render() {
-
         let postsList = this.state.postsList.map(userPost => {
             /* Przy pobieraniu kolejnych porcji danych, renderowanie nie startuje od zera, tylko zaczynając od aktualnie pobranej porcji. 
             Poprzednie są już zachowane. To zapewnia Virtual DOM */
             return (
                 <Post
-                    userPost={userPost}
-                    key={userPost.id}
-                    currentUserProp={this.props.currentUserProp}
-                    clearUserMethod={this.props.clearUserMethod}
-                    getPostsLatest={this.getPostsLatest}
-                    setPostsAfterDelete={this.setPostsAfterDelete}
-                    postsList={this.state.postsList}
+                userPost={userPost}
+                key={userPost.id}
+                currentUserProp={this.props.currentUserProp}
+                clearUserMethod={this.props.clearUserMethod}
+                getPostsLatest={this.getPostsLatest}
+                setPostsAfterDelete={this.setPostsAfterDelete}
+                postsList={this.state.postsList}
                 />
-            )
-        });
-
+                )
+            });
+            
         return (
             <section className="home">
                 {

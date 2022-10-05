@@ -21,7 +21,6 @@ class App extends Component {
         }
     } 
 
-
     saveCurrentUserData = (user) => {
         //alert('Save Users data!');
         this.setState({
@@ -29,7 +28,6 @@ class App extends Component {
         })
     }
     
-    //ta metoda jest wywoływana bezpośrednio w przypadku, gdy wywołanie metody isTokenValid nie jest niezbędne 
     clearUser = () => {
         //ten warunek sie przydaje gdy ta metoda jest wywolywana z poziomu innego komponentu
         if (this.state.currentUser) {
@@ -37,24 +35,6 @@ class App extends Component {
             this.setState({ currentUser: null })
         }
     }
-
-    isTokenValid = () => {
-        const axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null)
-            }
-        }
-
-        axios.post('https://akademia108.pl/api/social-app/user/profile',
-            {},
-            axiosConfig
-        ).catch(() => {
-            this.clearUser();
-        })
-    }
-
 
     signUserOut = (e) => {
         //TO DO - powinien tutaj być preventDefault - bo inaczej wypali zdarzenie domyslne - przejscie do URL wskazanego przez linka
@@ -85,11 +65,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        //wyslac zapytanie do backendu, czy token jest wazny(zapytanie o profil uzytkownika), inaczej wyczyscic jego dane z localStorage
-        if (this.state.currentUser) {
-            this.isTokenValid();
-        }
-
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null);
         axios.defaults.headers.post['Content-Type'] = 'application/json';
     }
@@ -101,7 +76,6 @@ class App extends Component {
     }
 
     render() {
-
         return (
             <div className="App">
                 <header className="App-header">
@@ -118,7 +92,7 @@ class App extends Component {
                             {this.state.currentUser && <li> <Link to="#" onClick={(e) => this.signUserOut(e)}>Wyloguj </Link></li>}
                         </ul>
                         {this.state.isMessageVisible && this.state.logoutSuccessMessage && <p className="logout-success">{this.state.logoutSuccessMessage}</p>}
-                        {this.state.isMessageVisible && this.state.logoutErrorMessage && <p className="logout-error">{this.state.logoutErrorMessage}</p>}
+                        {this.state.currentUser && this.state.logoutErrorMessage && <p className="logout-error">{this.state.logoutErrorMessage}</p>}
                     </nav>
                 </header>
                 <Routes>
@@ -127,7 +101,6 @@ class App extends Component {
                         element={
                             <Home
                                 currentUserProp={this.state.currentUser}
-                                tokenCheckMethod={this.isTokenValid}
                                 clearUserMethod={this.clearUser}/* bedzie przekazywany do komponentu potomnego wzgledem Home */
                             />
                         }
@@ -149,6 +122,7 @@ class App extends Component {
                         path="allfollows" 
                         element={
                             <AllFollows 
+                                clearUserMethod={this.clearUser}
                                 currentUserProp={this.state.currentUser}
                             />
                         } 
