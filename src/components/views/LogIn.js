@@ -40,8 +40,8 @@ export default function LogIn(props) {
             } 
             
             if (res.data.error) {
-                setUnexistUserMessage('Nie ma takiego użytkownika (Używaj tylko tych predefiniowanych)')
-
+                setUnexistUserMessage('Używaj tylko predefiniowane konta!')
+                
             } else if (!Array.isArray(res.data.username) && !Array.isArray(res.data.password)) {
                 const currentUser = res.data;
                 props.saveCurrentUserData(currentUser);//zeby zapisac obiekt uzytkownika do stanu w App         

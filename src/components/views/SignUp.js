@@ -76,11 +76,6 @@ class SignUp extends Component {
             this.setState(() => {
                 return { emailError: 'Podaj adres email' };
             })
-        } else if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(this.state.email.trim())) {
-            dataReadyToBeSent = false;
-            this.setState(() => {
-                return { emailError: 'Niepoprawny adres email' };
-            })
         } else if (this.state.emailError) {
             this.setState(() => {
                 return { emailError: '' };
