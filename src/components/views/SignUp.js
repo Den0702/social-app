@@ -51,7 +51,7 @@ class SignUp extends Component {
     validateForm = (event) => {
         event.preventDefault();
 
-        let dataReadyToBeSent = true;//jezeli przynajmniej jedno pole bedzie niepoprawne, to sie ustawi na false
+        let dataReadyToBeSent = true;
 
         /***************ustawienie stanów po zdarzeniu submit***************/
         //------walidacja nazwy użytkownika---------
@@ -67,7 +67,7 @@ class SignUp extends Component {
             })
         } else if (this.state.loginError) {
             this.setState(() => {
-                return { loginError: '' }; //czyszczenie error'a po przeładowaniu
+                return { loginError: '' }; 
             })
         }
         //----walidacja adresu poczty---
@@ -219,7 +219,6 @@ class SignUp extends Component {
                     {!(this.state.emailError === '') && <p className='clientErrorMessage'>{this.state.emailError}</p>}
                     {!(this.state.passwdError === '') && <p className='clientErrorMessage'>{this.state.passwdError}</p>}
                     {!(this.state.confirmPasswdError === '') && <p className='clientErrorMessage'>{this.state.confirmPasswdError}</p>}
-                    {/* Jak odpowiedź nie jest pusta to pokaż ją */}
                     {this.state.response !== '' && <p className="serverResponse">{this.state.response}</p>}
 
                     {this.state.signUpDone ?

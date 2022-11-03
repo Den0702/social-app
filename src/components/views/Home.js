@@ -19,7 +19,6 @@ class Home extends Component {
     getPostsLatest = () => {
         axios.post('https://akademia108.pl/api/social-app/post/latest')
             .then(res => {
-                /* przekazujemy do setState tylko obiekt(nie funkcje), poniewaz nie polegamy na poprzednim stanie */
                 this.setState({
                     //TO DO - po dodaniu postu pobieraj z post/newer-then posty nowesze niż ostatni pobrany do tej pory i dodawaj je do listy - zrób do tego osobną metodę
                     postsList: res.data
@@ -65,7 +64,6 @@ class Home extends Component {
         this.setState({ postsList: posts})
     }
 
-    //ta metoda uruchamia sie przy pierwszym zaladowaniu komponentu
     componentDidMount() {
         this.getPostsLatest();
     }

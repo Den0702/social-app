@@ -23,7 +23,7 @@ class PostAdd extends Component {
                 postContent
             ).then(res => {
                     this.setState({ message: res.data.message })
-                    this.props.getNewerPosts();//zeby strona sie odswiezyla i ten nowoutworzony post sie pojawil
+                    this.props.getNewerPosts();
                     this._userPostTextField.value = '';
                 }
             ).catch(error => {

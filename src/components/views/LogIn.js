@@ -44,8 +44,8 @@ export default function LogIn(props) {
                 
             } else if (!Array.isArray(res.data.username) && !Array.isArray(res.data.password)) {
                 const currentUser = res.data;
-                props.saveCurrentUserData(currentUser);//zeby zapisac obiekt uzytkownika do stanu w App         
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));//i jednoczesnie zapisac do localStorage
+                props.saveCurrentUserData(currentUser);         
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
             }
         })
         .catch(error => console.log(`The signUserIn's query caused this error: ${error}`));

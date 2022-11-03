@@ -25,8 +25,6 @@ class Post extends Component {
 
         if (this.props.currentUserProp) {
             let currentUserLeftLike = usersLikesArr.find(user => {
-                //jezeli imie tego, kto znajduje sie w tablicy lajkow jest tozsame 
-                //z imieniem aktualnie zalogowanego uzytkownika, to zwroc tego uzytkownika
                 return user.username === this.props.currentUserProp.username
             })
 
@@ -46,7 +44,7 @@ class Post extends Component {
             sentData
         ).then(res => {
             console.log(res);
-            /* ja tak rozumiem dajemy tutaj funkcje do setState, bo opieramy sie w warunku o poprzedni stan wartosci likesNum*/
+            /* ja tak rozumiem, że trzeba dać tutaj funkcje do setState, bo opieramy sie w warunku o poprzedni stan wartosci likesNum*/
             this.setState((currentState) => {
                 return {
                     liked: res.data.liked,
@@ -116,10 +114,9 @@ class Post extends Component {
             sentData
         ).then((res) => {
             this.props.getPostsLatest();
-            /* console.log(res.data) */
         }).catch(error => {
             console.log(error);
-            this.props.clearUserMethod()//to robie kazdorazowo na przypadek wygasniecia ttl'a 
+            this.props.clearUserMethod() 
         })
     }
 
@@ -148,7 +145,7 @@ class Post extends Component {
                         onClick={() => this.setState({ deleteModalDisplay: true })}
                     >
                         <FontAwesomeIcon icon="fa-solid fa-xmark" />{" "}
-                        Delete your post
+                        Usuń post
                     </button>
                 )}
 
@@ -179,9 +176,9 @@ class Post extends Component {
 
                 {this.state.deleteModalDisplay && (
                     <div className="deleteConfirmation">
-                        <h3>Are you sure you want to delete post?</h3>
-                        <button className="btn yes" onClick={() => this.postDelete()}>Yes</button>{" "}
-                        <button className="btn no" onClick={() => this.setState({ deleteModalDisplay: false })}>No</button>
+                        <h3>Czy na pewno usunąć tego posta?</h3>
+                        <button className="btn yes" onClick={() => this.postDelete()}>Tak</button>{" "}
+                        <button className="btn no" onClick={() => this.setState({ deleteModalDisplay: false })}>Nie</button>
                     </div>
                 )}
             </div>
