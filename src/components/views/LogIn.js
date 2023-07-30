@@ -26,19 +26,7 @@ export default function LogIn(props) {
             'https://akademia108.pl/api/social-app/user/login', 
             sentData, 
         )
-        .then(res => {            
-            if (Array.isArray(res.data.username)) {
-                setUsernameError(res.data.username[0]);
-            } else {
-                setUsernameError('');
-            }
-            
-            if (Array.isArray(res.data.password)) {
-                setPasswdError(res.data.password[0]);
-            } else {
-                setPasswdError('');
-            } 
-            
+        .then(res => {                     
             if (res.data.error) {
                 setUnexistUserMessage('Używaj tylko predefiniowane konta!')
                 
@@ -48,8 +36,7 @@ export default function LogIn(props) {
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
             }
         })
-        .catch(error => console.log(`The signUserIn's query caused this error: ${error}`));
-        
+        .catch(error => console.log(`The signUserIn's query caused this error: ${error}`));   
     }
 
     return (

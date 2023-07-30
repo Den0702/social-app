@@ -17,7 +17,6 @@ class PostAdd extends Component {
 
         //jezeli post nie jest pusty
         if (postContent.content) {
-
             axios.post(
                 'https://akademia108.pl/api/social-app/post/add',
                 postContent
@@ -27,8 +26,6 @@ class PostAdd extends Component {
                     this._userPostTextField.value = '';
                 }
             ).catch(error => {
-                console.log(`addPost's query caused this error: ${error.data.message}`);
-
                 this._userPostTextField.value = '';
                 this.props.clearUserMethod();
 

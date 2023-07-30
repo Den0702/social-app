@@ -17,7 +17,6 @@ class App extends Component {
         /* Initial state jest ustawiany albo na zalogowanego uzytkownika albo na nic */
         this.state = {
             currentUser: localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null,
-            isMessageVisible: true,
         }
     } 
 
@@ -28,11 +27,16 @@ class App extends Component {
         })
     }
     
-    clearUser = () => {
+    clearUser = (logoutSuccess) => {
         //ten warunek sie przydaje gdy ta metoda jest wywolywana z poziomu innego komponentu
         if (this.state.currentUser) {
-            localStorage.removeItem('currentUser')
-            this.setState({ currentUser: null })
+            localStorage.removeItem('currentUser');
+            this.setState(() => { 
+              return {
+                currentUser: null,
+                logoutSuccessMessage: logoutSuccess, 
+              }
+            });
         }
     }
 
@@ -46,19 +50,19 @@ class App extends Component {
         )
             .then(res => {
                 // jezeli dostamy pozytywna odpowiedz o wylogowaniu, to wtedy odswiezymy stan uzytkownika + wiadomosc o pozytywnym wylogowaniu
-                this.setState(() => {
-                    return {
-                        logoutSuccessMessage: res.data.message,
-                        currentUser: null
-                    }
-                })
-                localStorage.removeItem('currentUser');
+                this.clearUser(res.data.message);
                 //wyswietla komunikat serwera o wylogowaniu uzytkownika
-                setTimeout(() => this.setState({ isMessageVisible: false }), 3000)
+                setTimeout((prevState) => (
+                  this.setState(
+                    { ...prevState,
+                      logoutSuccessMessage: ''
+                    })
+                ), 3000)
             },
                 error => {
                     console.log(`App: signUserOut's query caused this error: ${error}`)
-                    this.setState({ logoutErrorMessage: error.message })
+                    this.setState({logoutErrorMessage: error.message })
+                    setTimeout(() => this.clearUser(), 3000);
                 }
             )
 
@@ -73,6 +77,14 @@ class App extends Component {
         //reinicjalizacja domyslnych naglowkow po aktualizacji komponentu App
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + (this.state.currentUser ? this.state.currentUser.jwt_token : null);
         axios.defaults.headers.post['Content-Type'] = 'application/json';
+        
+        if (this.state.logoutErrorMessage && !this.state.currentUser) {
+          this.setState(() => {
+            return {
+              logoutErrorMessage: '',
+            }
+        });
+        }
     }
 
     render() {
@@ -91,7 +103,7 @@ class App extends Component {
                             
                             {this.state.currentUser && <li> <Link to="#" onClick={(e) => this.signUserOut(e)}>Wyloguj </Link></li>}
                         </ul>
-                        {this.state.isMessageVisible && this.state.logoutSuccessMessage && <p className="logout-success">{this.state.logoutSuccessMessage}</p>}
+                        {this.state.logoutSuccessMessage && <p className="logout-success">{this.state.logoutSuccessMessage}</p>}
                         {this.state.currentUser && this.state.logoutErrorMessage && <p className="logout-error">{this.state.logoutErrorMessage}</p>}
                     </nav>
                 </header>
